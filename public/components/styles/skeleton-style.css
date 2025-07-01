@@ -1,0 +1,61 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* 스켈레톤 스타일 */
+.skeleton-image{
+	border-radius: 6px;
+	background-color: var(--gray-e, #eee) !important;
+	overflow: hidden;
+	position: relative;	
+}
+
+.skeleton-text {
+	background-color: var(--gray-e, #eee) !important;
+	overflow: hidden;
+	position: relative;	
+}
+
+.skeleton-text::before,
+.skeleton-image:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0%; /* 시작 위치 (왼쪽 밖) */
+    width: 50%; /* 반짝이는 빛의 너비 */
+    height: 100%;
+    background: linear-gradient(to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%, /* 반짝이는 빛 */
+        rgba(255, 255, 255, 0) 100%
+    );
+	
+	transform: translateX(-100%); /* 시작 위치 (왼쪽 밖) */
+    animation: shimmer 1.5s infinite linear; /* 애니메이션 적용 */	
+}
+
+
+
+
+/* Pulse 애니메이션 정의 */
+@keyframes pulse {
+    0% {
+        background-color: #e0e0e0; /* 시작 색상 */
+    }
+    50% {
+        background-color: #f0f0f0; /* 밝아지는 색상 */
+    }
+    100% {
+        background-color: #e0e0e0; /* 다시 시작 색상 */
+    }
+}
+
+/* Shimmer 애니메이션 정의 */
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%); /* 왼쪽 밖에서 시작 */
+    }
+    100% {
+        transform: translateX(200%); /* 오른쪽 밖으로 이동 */
+        /* width: 50% 일 때, 200%로 이동하면 전체 영역을 커버함 */
+    }
+}

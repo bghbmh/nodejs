@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.wrap{
+
+}
+.page-header {
+	height: 97px;
+	display: flex;
+	align-items: center;
+  
+}
+.page-header .page-title{
+	font-size: 28px;	  
+	font-weight: 800;
+	color: var(--font-color-default);
+	margin: 0;
+	margin-right: auto;
+}
+.page-header .button-wrap .btn{}
+@media(max-width : 1280px){
+	/* .page-header { height: 64px; } */
+	.page-header .page-title{ font-size: 24px;	 }
+}
+@media (max-width: 1024px) {
+	.btn.add {
+		font-size: 24px;
+		width: 1.5em;
+		height: 1.5em;
+		color: transparent;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+}
+@media(max-width : 768px){
+	.page-header { height: 64px; }
+}
+
+
+
+

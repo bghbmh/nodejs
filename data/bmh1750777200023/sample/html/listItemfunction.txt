@@ -1,0 +1,17 @@
+function listTestFunction(str){
+	let selectedListitem = null;
+	let tagrgetItem = str;
+	return function(e){
+		if( !e.target.closest(tagrgetItem) ) return;
+
+		let elem = e.target.closest(tagrgetItem);
+		if( selectedListitem && selectedListitem === e.target.closest(".on") ) {
+			selectedListitem.classList.remove("on");
+			return;
+		}
+		
+		if( selectedListitem ) selectedListitem.classList.remove("on");
+		elem.parentNode.classList.add("on") ;
+		selectedListitem = elem.parentNode;
+	};
+}
