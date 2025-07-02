@@ -42,7 +42,7 @@ import '../../components/pop-over.js';
 
 
 import '../../components/personal-info.js';
-
+import '../../components/site-account.js';
 
 import '../../components/current-state.js';
 import '../../components/project-category.js';
