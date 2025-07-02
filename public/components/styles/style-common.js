@@ -4,7 +4,7 @@
 
 
 const cssFilePaths = [
-	'../../assets/css/helper.css',
+	'../../../../assets/css/helper.css',
 	'../../assets/css/myAdmin-reset.css', 
 	'../../assets/css/myAdmin-common.css',
 	'./skeleton-style.css'
