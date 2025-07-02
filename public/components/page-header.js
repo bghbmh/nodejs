@@ -1,5 +1,7 @@
 
+import commonSheet from './styles/style-common.js';
 
+import { DispatchCustomEvent } from './Utils-event.js';
 
 const pageHeaderStyle = `
 
@@ -197,6 +199,7 @@ class PageHeader extends HTMLElement {
 		const button = e.target.closest("button");
 		if (!button ) return;
 	
+		DispatchCustomEvent(this._body, 'clicked-header', { action : button.dataset.action });
 		
 	}
 
