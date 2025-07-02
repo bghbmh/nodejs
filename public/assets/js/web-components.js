@@ -1,7 +1,7 @@
 
 //단일 컴포넌트
 
-import '/wowAdmin/public/components/projectDetail.js';
+import './public/components/projectDetail.js';
 import '../../components/page-header.js';
 import '../../components/header-user-info.js';
 import '../../components/global-nav.js';
