@@ -41,7 +41,7 @@ import '../../components/pop-over.js';
 
 
 
-
+import '../../components/personal-info.js';
 
 
 import '../../components/current-state.js';

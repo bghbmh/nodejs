@@ -6,8 +6,8 @@ import * as DOM from './Utils-dom.js';
 import { getFileUrl, CheckFilesInFolder } from './Utils-api.js';
 import { DispatchCustomEvent } from './Utils-event.js';
 
-import '/components/section-header.js';
-import { UploadFiles } from '/assets/js/custom-library/bUploadFile/export-bUploadFile.js';
+import './section-header.js';
+import { UploadFiles } from '../assets/js/custom-library/bUploadFile/export-bUploadFile.js';
 
 import './modal-popup.js';
 import './preview-file.js'
