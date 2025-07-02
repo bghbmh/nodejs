@@ -1,6 +1,6 @@
 
 //단일 컴포넌트
-
+import { origin  } from './tempFile.js';
 import '../../components/projectDetail.js';
 import '../../components/page-header.js';
 import '../../components/header-user-info.js';
@@ -34,3 +34,26 @@ import '../../components/loading-skeleton.js';
 
 import '../../components/modal-popup.js';
 import '../../components/pop-over.js';
+
+
+
+
+
+
+
+
+
+
+import '../../components/current-state.js';
+import '../../components/project-category.js';
+import '../../components/extra-info.js';
+import '../../components/external-link.js';
+import '../../components/project-member.js'
+import '../../components/preview-file.js'
+import '../../components/file-uploader.js';
+import '../../components/switch-type1.js';
+import '../../components/category-type2.js';
+import '../../components/category-type3.js';
+import '../../components/radio-group-list1.js';
+import '../../components/text-icon.js';
+import '../../components/alert-toast.js';
