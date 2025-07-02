@@ -27,7 +27,7 @@ function setCssStyle(){
 	// CSS 파일 연결
 	return `
 
-:host {
+:host {  /* ... */
 flex: 0 0 auto;
   display: inline-flex;
   width: calc(8em);
