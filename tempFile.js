@@ -1,6 +1,6 @@
 
 
-export let tempDB = "myList_test.json"; //myList testList.json
+export let testDB = "testDB.json"; //myList testList.json
 
 export let memberDB = 'memberlist.json';
 

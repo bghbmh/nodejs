@@ -313,8 +313,14 @@ async function loadComponents(component, details = null) {
 
 async function jsonDB(router) {
 
+	let url ;
+	if( router === 'jsonDB' ){
+		url = origin +'/data/' + testDB;
+	} else {
+		url = origin +'/data/profile/' + memberDB;
+	}
 	try {
-		const response = await fetch('/'+router, { method: 'GET' });
+		const response = await fetch( url, { method: 'GET' });
 
 		// 응답 상태 확인
 		if (!response.ok) { // HTTP 상태 코드가 200-299 범위가 아니면 오류
