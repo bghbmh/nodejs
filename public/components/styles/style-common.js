@@ -4,10 +4,10 @@
 
 
 const cssFilePaths = [
-	'wowAdmin/public/assets/css/helper.css',
-	'wowAdmin/public/assets/css/myAdmin-reset.css', 
-	'wowAdmin/public/assets/css/myAdmin-common.css',
-	'wowAdmin/public/components/styles/skeleton-style.css'
+	'public/assets/css/helper.css',
+	'public/assets/css/myAdmin-reset.css', 
+	'public/assets/css/myAdmin-common.css',
+	'public/components/styles/skeleton-style.css'
 ];
 
 const commonSheet = new CSSStyleSheet();
