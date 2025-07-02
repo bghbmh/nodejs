@@ -44,7 +44,9 @@ const globalNavList = [
 	}
 ];
 
-document.querySelector(".tempTabMenu")
+// document.querySelector(".tempTabMenu")
+
+console.log("DOMContentLoaded - 999999999");
 
 document.addEventListener('DOMContentLoaded', () => {
 	console.log("DOMContentLoaded - ");
