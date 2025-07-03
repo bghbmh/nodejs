@@ -53,12 +53,10 @@ class ProjectDetail extends HTMLElement {
             '/assets/js/custom-library/bUploadFile/bUploadFile.css',
 			'/components/styles/projectDetail.css'
 		]);
-		this._initBody();
+		
 
 		this._ClickHandler = this._onClick.bind(this); 
 		this._SubmitHandler = this._onSubmit.bind(this); 
-
-		this._body.addEventListener('click', this._ClickHandler);
 
 		this._default = {
 				"mainOpen": false,
@@ -79,6 +77,8 @@ class ProjectDetail extends HTMLElement {
 				"projectState": "",
 				"member": []
 			};
+
+		this._initBody();
 	}
 
 	async loadStylesSheets( cssFilePaths ) {
@@ -117,6 +117,7 @@ class ProjectDetail extends HTMLElement {
         this._body = document.createElement("section");
         this._body.setAttribute("class", "section type2 project-detail");
         this.shadowRoot.appendChild(this._body);
+		this._body.addEventListener('click', this._ClickHandler);
     }
 
 	// --- 속성 및 데이터 Getter/Setter ---
@@ -156,10 +157,19 @@ class ProjectDetail extends HTMLElement {
 	// --- 라이프사이클 콜백 ---
 	connectedCallback() { // 컴포넌트가 DOM에 추가될 때 호출
 		
+		console.log('ProjectDetail connected!');
+		this.observer = new MutationObserver(this.handleBodyMutations.bind(this));
+
+		// document.body의 속성 변경을 감지하도록 Observer 시작
+		this.observer.observe(document.body, {
+			attributes: true, // 속성 변경 감지
+			attributeFilter: ['data-theme'] // 'data-theme' 속성만 감지하도록 필터링
+		});
 	}	
 
 	disconnectedCallback() {
 		this._body.removeEventListener('click', this._ClickHandler );
+		this.observer.disconnect();
 	}
 
 	// 속성 값이 변경될 때 호출 (observedAttributes에 등록된 속성만 해당)
@@ -169,11 +179,27 @@ class ProjectDetail extends HTMLElement {
         }
 	}
 
+	// body의 변화를 감지했을 때 호출될 콜백 함수
+	handleBodyMutations(mutationsList) {
+
+		console.log(` ///////////////////// test data-theme ${mutationsList} `);
+
+
+		for (const mutation of mutationsList) {
+			if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+				const newTheme = document.body.getAttribute('data-theme');
+				console.log(`웹 컴포넌트: document.body의 data-theme이 ${newTheme}로 변경되었습니다.`);
+
+				this._body.setAttribute('theme', newTheme);
+				// 여기에 변경된 테마에 따라 웹 컴포넌트의 스타일을 업데이트하는 로직을 추가합니다.
+				// 예: CSS 변수 업데이트, 특정 클래스 추가/제거 등
+				//this.updateTheme(newTheme);
+			}
+        }
+	}
+
     // --- 데이터 처리 ---
 	async _setFilesData(item) { console.log("_setFilesData - " )
-
-		// CheckFilesInFolder('image', item.mainimage ) 
-			
 
 		this._fileItems.mainimage = await getFileUrl('image', [...this._item.mainimage]) ; 
 		this._fileItems.subimage = await getFileUrl('image', [...this._item.subimage]) ;
@@ -652,7 +678,7 @@ const MarkUp = {
 
 						<dl>
 							<dt>외부링크 추가</dt>
-							<dd class="d-flex gap-2">								
+							<dd class="d-flex gap-2 flex-wrap ">
 								${ Object.keys(item.externalLink).length ? 
 									Object.entries( item.externalLink )
 									.map( a => `<external-link type="view" data-label='${a[0]}' data-value='${a[1]}'></external-link>` ).join('') : `<external-link type="view"></external-link>`

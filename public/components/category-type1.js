@@ -54,6 +54,11 @@ dl > *{ margin: 0; }
 .icon-svg2-branding + dl dt{ color: #44C800; }
 .icon-svg2-me + dl dt{ color: #0EA9CF; }
 
+@media(max-width: 768px){
+	i[class*="-svg2-"] { padding: 0 }
+	.text{ display: flex; gap: 4px }
+}
+
 `
 }
 

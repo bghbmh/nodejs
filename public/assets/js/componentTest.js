@@ -84,13 +84,14 @@ async function initSetPage(webComponent){
 		// 	await pageHeaderElem
 		// ]);
 		
-	
-		if (customElements.get('header-user-info')) { console.log("header-user-info");
-			let testUser = {id: 1728845897477 }
-
+		let testUser = {id: 1728845897477 };
 			const memberDB = await jsonDB('memberDB'); 
 			const [profile] = memberDB.filter( m => m.id === testUser.id );
 			
+		document.body.dataset.theme = profile.mode;
+
+
+		if (customElements.get('header-user-info')) { console.log("header-user-info");	
 			const headerUserinfo = document.createElement('header-user-info');
 			headerUserinfo.profile = profile; // 임시
 			commonHeader.appendChild(headerUserinfo);

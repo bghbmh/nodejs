@@ -12,7 +12,7 @@ const pageHeaderStyle = `
 	flex-direction: column;
 	height: 120px;
 	top: -4px;
-	background-color: rgba(249, 251, 250, 0.8);
+	background-color: var(--page-header-bc, rgba(249, 251, 250, 0.8) );
 	
 	gap: 1em 8px;
 	z-index: 5;

@@ -28,7 +28,7 @@ const memberDBPath = path.join(__dirname,'data','profile', 'info.json')
 
 app.use(express.static(publicPath));
 app.use(express.json()); 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); 
 
 
 const DB_ROOT_DIR = path.join(__dirname, 'data'); // 모든 업로드의 최상위 디렉토리

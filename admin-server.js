@@ -45,7 +45,7 @@ app.use(express.static(publicPath));
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
-const OLD_SERVER_URL = `http://${myIP}:1323/oldData`;// 데이터를 가져올 다른 서버의 주소와 포트
+// const OLD_SERVER_URL = `http://${myIP}:1323/oldData`;// 데이터를 가져올 다른 서버의 주소와 포트
 const DB_ROOT_DIR = path.join(__dirname, 'data'); // 모든 업로드의 최상위 디렉토리
 
 // 데이터 이관하기 dataMigration
@@ -243,7 +243,7 @@ checkDBPromise()
     .then((DB) => {
         console.log("DB 체크 프로세스 완료.");
 		if( !DB[0].projectNum ){ //projectState  
-			dataMigration(DB);
+			//dataMigration(DB);
 		}
         // DB 파일이 존재하거나 생성된 후의 다음 작업
     })
