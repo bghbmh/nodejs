@@ -90,3 +90,26 @@ export function CheckFilesInFolder(kind, files){
 	
 	return {files : files, empth : false };
 }
+
+
+async function jsonDB(router) {
+
+	try {
+		const response = await fetch('/'+router, { method: 'GET' });
+
+		// 응답 상태 확인
+		if (!response.ok) { // HTTP 상태 코드가 200-299 범위가 아니면 오류
+			const errorText = await response.text(); // 오류 응답 본문을 텍스트로 읽기
+			throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+		}
+
+		// 응답 본문을 JSON으로 파싱 (서버에서 JSON으로 응답을 보냈을 경우)
+    	const result = await response.json();
+		//console.log('서버로부터 받은 데이터 (성공):', result);
+		return result; // 받은 데이터를 반환
+
+	} catch (error) {
+		console.error('전송 중 오류 발생:', error);
+    	throw error; // 에러를 다시 throw하여 호출자에게 알림
+	}
+}

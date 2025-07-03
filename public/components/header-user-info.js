@@ -1,7 +1,7 @@
 
 
 import * as DOM from './Utils-dom.js';
-import { getFileUrl } from './Utils-api.js';
+import { getFileUrl, jsonDB } from './Utils-api.js';
 
 import commonSheet from './styles/style-common.js';
 
@@ -71,6 +71,9 @@ class HeaderUserInfo extends HTMLElement {
         this.setAttribute('mode', 'loading');
 
 		try {
+
+			document.body.dataset.theme = this._profile.mode;
+
 			await this._setFilesData(this._profile.image.main);
 			this.setAttribute('mode', 'view'); // 데이터 로드 완료 후 'view' 모드로 변경
 		} catch (error) {
@@ -108,24 +111,37 @@ class HeaderUserInfo extends HTMLElement {
 		const action = button.dataset.action;
 		if (!action) return;
 
-		const slot = DOM.CreateElement({ tag:'div', slot:'popover-content' });
-		
-		const a = DOM.CreateElement({ tag:'div', class:'popover-header', textContent:' 내 정보' });
-		const originalNode = this._body.querySelector('.user .info');
-		const clonedNode = originalNode.cloneNode(true); 
-		//clonedNode.setAttribute("slot", 'popover-content');
+		switch(action){
+			case "modal":
+				const slot = DOM.CreateElement({ tag:'div', slot:'popover-content' });
+				
+				const a = DOM.CreateElement({ tag:'div', class:'popover-header', textContent:' 내 정보' });
+				const originalNode = this._body.querySelector('.user .info');
+				const clonedNode = originalNode.cloneNode(true); 
+				//clonedNode.setAttribute("slot", 'popover-content');
 
-		slot.appendChild(a);
-		slot.appendChild(clonedNode);
+				slot.appendChild(a);
+				slot.appendChild(clonedNode);
 
-		console.log('clickElem - ', clonedNode);
-		const popover = DOM.CreateElement({ tag:'pop-over', class:'popover popover-user-info' });
+				console.log('clickElem - ', clonedNode);
+				const popover = DOM.CreateElement({ tag:'pop-over', class:'popover popover-user-info' });
 
-		popover.appendChild(slot);
-		
+				popover.appendChild(slot);
+				document.body.appendChild(popover)
+				popover.open();
+			break;
+			case "theme":
+				jsonDB('memberDB').then( members => {
+					const [profile] = members.filter(m => m.id === this._profile.id);
+					document.body.dataset.theme = this._profile.mode;
+				}).catch( err => {
 
-		document.body.appendChild(popover)
-		popover.open();
+				});
+				//const [profile] = memberDB.filter(m => m.id === testUser.id);
+			break;
+		}
+
+
 	}
 
 }
@@ -163,7 +179,7 @@ const MarkUp = {
 						${profile.nickname.check ? '<small class="option margin-right-auto">별명 사용 중 <i class="icon-svg-check-circle-fill primary" aria-hidden="true"></i></small>' : '<small class="option margin-right-auto">별명 사용 안함 <i class="icon-svg-check-circle-fill" aria-hidden="true"></i></small>'}
 						
 						<label class="toggle mode">
-							<input type="checkbox" ${profile.mode === 'dark' ? 'checked' : ''}>
+							<input type="checkbox" ${profile.mode === 'dark' ? 'checked' : ''} data-action="theme">
 						</label>
 					</div>
 			
