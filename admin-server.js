@@ -1,6 +1,5 @@
 //기본정보
-import { IP } from "./myConfig.js";
-const myIP = IP[0]; 
+const myIP = process.env.MY_SERVER_IP; 
 const port = 1113;
 
 
