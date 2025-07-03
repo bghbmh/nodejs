@@ -594,7 +594,8 @@ app.get('/memberDB', async (req, res) => {
 	}
 });
 
-let testPath = path.join(publicPath, 'html', 'index.html')
+//let testPath = path.join(publicPath, 'html', 'index.html')
+let testPath = path.join(publicPath, 'index.html')
 
 
 //app.get("/", (req, res) => res.sendFile( testPath ) );
