@@ -7,7 +7,7 @@ import { getFileUrl, CheckFilesInFolder } from './Utils-api.js';
 import { DispatchCustomEvent } from './Utils-event.js';
 
 import './section-header.js';
-import { UploadFiles } from '/assets/js/custom-library/bUploadFile/export-bUploadFile.js';
+import { UploadFiles } from '../assets/js/custom-library/bUploadFile/export-bUploadFile.js';
 
 import './modal-popup.js';
 

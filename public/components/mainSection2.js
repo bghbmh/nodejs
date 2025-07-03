@@ -17,7 +17,7 @@ let ct = {
 };
 import commonSheet from './styles/style-common.js';
 
-import '/components/section-header.js';
+import './section-header.js';
 
 import * as DOM from './Utils-dom.js';
 import { DispatchCustomEvent } from './Utils-event.js';

@@ -1,6 +1,6 @@
 // file-uploader.js
 
-import { UploadFiles } from '/assets/js/custom-library/bUploadFile/export-bUploadFile.js';
+import { UploadFiles } from '../assets/js/custom-library/bUploadFile/export-bUploadFile.js';
 import commonSheet from './styles/style-common.js'; // 필요시 공통 스타일 임포트
 
 import * as DOM from './Utils-dom.js';
