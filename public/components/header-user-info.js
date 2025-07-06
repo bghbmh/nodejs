@@ -38,6 +38,11 @@ class HeaderUserInfo extends HTMLElement {
 	get profile() {
 		return this._profile;
 	}
+
+	set theme(theme){
+		document.body.dataset.theme = theme;
+		this._profile.theme = theme;
+	}
 	
 	static get observedAttributes() {
 		return ['mode'];
@@ -72,7 +77,7 @@ class HeaderUserInfo extends HTMLElement {
 
 		try {
 
-			document.body.dataset.theme = this._profile.mode;
+			this.theme = this._profile.theme ;
 
 			await this._setFilesData(this._profile.image.main);
 			this.setAttribute('mode', 'view'); // 데이터 로드 완료 후 'view' 모드로 변경
@@ -105,7 +110,7 @@ class HeaderUserInfo extends HTMLElement {
 
 	_onClick(e){
 		
-		const button = e.target.closest("button");
+		const button = e.target.closest("[data-action]");
 		if (!button) return;
 
 		const action = button.dataset.action;
@@ -131,12 +136,32 @@ class HeaderUserInfo extends HTMLElement {
 				popover.open();
 			break;
 			case "theme":
-				jsonDB('memberDB').then( members => {
-					const [profile] = members.filter(m => m.id === this._profile.id);
-					document.body.dataset.theme = this._profile.mode;
-				}).catch( err => {
+				
+				let data ={ id: this._profile.id, theme: button.checked ? 'dark' : 'light' };
+				
+				fetch( '/memberDB/theme', { 
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json' // JSON 데이터임을 명시
+					},
+					body:  JSON.stringify(data)
+				}).then( response => {
+					console.log("theme front  - ", response )
+					// 응답 상태 확인
+					if (!response.ok) {
+						const errorBody = response.text(); // 오류 본문 읽기 시도
+						throw new Error(`updateProject - HTTP error! Status: ${response.status}, StatusText: ${response.statusText}, Body: ${errorBody}`);
+					}
+					return response.json();
 
+				}).then( data => {
+					console.log("updateProject front error - ", data);
+					this.theme = data.theme;
+					//return error;
 				});
+
+				console.log("theme --- ", button.checked, data )
+
 				//const [profile] = memberDB.filter(m => m.id === testUser.id);
 			break;
 		}
@@ -179,7 +204,7 @@ const MarkUp = {
 						${profile.nickname.check ? '<small class="option margin-right-auto">별명 사용 중 <i class="icon-svg-check-circle-fill primary" aria-hidden="true"></i></small>' : '<small class="option margin-right-auto">별명 사용 안함 <i class="icon-svg-check-circle-fill" aria-hidden="true"></i></small>'}
 						
 						<label class="toggle mode">
-							<input type="checkbox" ${profile.mode === 'dark' ? 'checked' : ''} data-action="theme">
+							<input type="checkbox" ${profile.theme === 'dark' ? 'checked' : ''} data-action="theme">
 						</label>
 					</div>
 			

@@ -84,13 +84,13 @@ async function initSetPage(webComponent){
 		// ]);
 		
 		let testUser = { id: 1728845897477 };
-		const memberDB = await jsonDB('memberDB');
+		const memberDB = await jsonDB('/memberDB');
 		const [profile] = memberDB.filter(m => m.id === testUser.id);
 
 		//document.body.dataset.theme = profile.mode;
 
 
-		if (customElements.get('header-user-info')) { console.log("header-user-info");	
+		if (customElements.get('header-user-info')) { console.log("header-user-info", profile);	
 			const headerUserinfo = document.createElement('header-user-info');
 			commonHeader.appendChild(headerUserinfo);
 			headerUserinfo.profile = profile; // 임시			
@@ -166,7 +166,7 @@ async function loadComponents(component, details = null) {
 
 		if ( component === 'main' ){
 			
-			const itemsData = await jsonDB('jsonDB'); 
+			const itemsData = await jsonDB('/projects/jsonDB'); 
 			
 			//'main-section1 
 			const ms1 = zCreateElement({ tag:'main-section1', class:'section'});
@@ -218,7 +218,7 @@ async function loadComponents(component, details = null) {
 
 		} else if( component === 'project-list' ) {
 			
-			const itemsData = await jsonDB('jsonDB'); 
+			const itemsData = await jsonDB('/projects/jsonDB'); 
 
 			const projectList = zCreateElement({ tag:'project-list' });
 			//
@@ -252,7 +252,7 @@ async function loadComponents(component, details = null) {
 					projectDetail.create();
 					history.pushState(null, '새 프로젝트 만들기', `/project-detail?action=edit`);
 				} else {
-					const itemsData = await jsonDB('jsonDB'); 
+					const itemsData = await jsonDB('/projects/jsonDB'); 
 					if (Array.isArray(itemsData)) {
 						let [item] = itemsData.filter( i => i.projectNum === Number(details.order) );
 						projectDetail.item = item; // 임시
@@ -284,7 +284,7 @@ async function loadComponents(component, details = null) {
 		} else if( component === 'profile' ){
 			let testUser = {id: 1728845897477 }
 
-			const memberDB = await jsonDB('memberDB'); 
+			const memberDB = await jsonDB('/memberDB'); 
 			const [profile] = memberDB.filter( m => m.id === testUser.id );
 
 			const pp = zCreateElement({ tag:'profile-info'});
@@ -306,8 +306,8 @@ async function loadComponents(component, details = null) {
 
 async function jsonDB(router) {
 
-	try {
-		const response = await fetch('/'+router, { method: 'GET' });
+	try {  console.log('componetnTest --- jsonDB :',router);
+		const response = await fetch( router, { method: 'GET' });
 
 		// 응답 상태 확인
 		if (!response.ok) { // HTTP 상태 코드가 200-299 범위가 아니면 오류
@@ -317,7 +317,7 @@ async function jsonDB(router) {
 
 		// 응답 본문을 JSON으로 파싱 (서버에서 JSON으로 응답을 보냈을 경우)
     	const result = await response.json();
-		//console.log('서버로부터 받은 데이터 (성공):', result);
+		console.log('서버로부터 받은 데이터 (성공):', result);
 		return result; // 받은 데이터를 반환
 
 	} catch (error) {

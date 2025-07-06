@@ -5,7 +5,7 @@
   "description": "myAdmin",
   "main": "admin-server.js",
   "scripts": {
-    "start": "node admin-server.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "sass-build": "sass public/assets/css/helper.scss public/assets/css/helper.css",
     "sass-watch": "sass --watch public/assets/css/helper.scss:public/assets/css/helper.css"

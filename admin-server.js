@@ -32,7 +32,7 @@ const __dirname = path.dirname(__filename);
 
 const publicPath = path.join(__dirname, 'public'); // 클라이언트 사이드 파일들이 있는 폴더
 const dataFolderPath = path.join(__dirname, 'data');
-const DATABASE_PATH = path.join(__dirname,'data', 'testDB.json') //myJsonDB 
+const DATABASE_PATH = path.join(__dirname,'data', 'testDB.json') //내 DB는 json
 const memberDBPath = path.join(__dirname,'data','profile', 'info.json')
 
 // --- 필수 미들웨어: req.body 파싱 ---
@@ -504,8 +504,6 @@ app.get('/files/:directoryName/:subdir/:filename', async (req, res) => {
     let subdir = req.params.subdir; // 'preview' 또는 'sample'
     const filename = decodeURIComponent(req.params.filename); //  req.params.filename;//
 
-	//console.log("file ===== ", filename);
-
 	let filePath;
 	if( directoryName === 'profile' ){
 		filePath = path.join(DB_ROOT_DIR, directoryName, filename);
@@ -533,7 +531,7 @@ app.get('/member/:directoryName/:filename', async (req, res) => {
     const directoryName = req.params.directoryName;
     const filename = decodeURIComponent(req.params.filename); // req.params.filename;//
 
-console.log("member ===== ",directoryName, filename);
+	console.log("member ===== ",directoryName, filename);
 
 	let filePath;
 		filePath = path.join(DB_ROOT_DIR, directoryName, filename);

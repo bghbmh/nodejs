@@ -158,6 +158,8 @@ class ProjectDetail extends HTMLElement {
 	connectedCallback() { // 컴포넌트가 DOM에 추가될 때 호출
 		
 		console.log('ProjectDetail connected!');
+
+		this._body.setAttribute('theme', document.body.getAttribute('data-theme'));
 		this.observer = new MutationObserver(this.handleBodyMutations.bind(this));
 
 		// document.body의 속성 변경을 감지하도록 Observer 시작
@@ -394,7 +396,7 @@ class ProjectDetail extends HTMLElement {
 		//const action = e.target.closest("button").dataset.action ;
 		console.log("_onSubmit - action : ",  e.submitter );
 
-		const url = '/' + e.submitter.dataset.action;
+		const url = '/projects/' + e.submitter.dataset.action;
 
 		const form = e.target;		
 		let formData = new FormData();
@@ -495,7 +497,7 @@ class ProjectDetail extends HTMLElement {
 		samplepage.files = this._fileItems.samplePage || [];
 		//samplepage.onPreviewMarkUp = upload1markup;
 		samplepage.onPreviewMarkUp = (file, objectURL) => {
-			let o = this._fileItems.samplePage.find( f => f.name === file.name );
+			let o = this._fileItems.samplePage?.find( f => f.name === file.name ) || null;
 			return upload1markup(file, objectURL,o )
 		} ;
 
@@ -572,7 +574,7 @@ function upload1markup(file, objectURL, args = null ){
 	fileItemWrap.innerHTML = `
 		<img src="${image ? objectURL : tempUrl}" alt="이미지">
 		<figcaption>
-			<label><span class="guide">라벨</span><input name="samplePagelabel" data-file-name="${file.name}" type="text" value="${args.label}" placeholder="라벨을 입력하세요"></label>
+			<label><span class="guide">라벨</span><input name="samplePagelabel" data-file-name="${file.name}" type="text" value="${args?.label || ''}" placeholder="라벨을 입력하세요"></label>
 			<span class="option title">${file.name}</span>
 			<span class="option">${(file.size / 1024).toFixed(2)} KB</span>
 		</figcaption>

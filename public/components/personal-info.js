@@ -244,7 +244,7 @@ const MarkUp = {
 				<div class="tCom013">
 
 					<div class="image-wrap">
-						<figure class="member circle ">
+						<figure class="member ">
 							<img src="${files.main[0].webUrl}" alt="${files.main[0].alt !== '' ? files.main[0].alt : files.main[0].name}" aria-hidden="true">
 							<figcaption>
 								<span class="option title">${member.name}</span>
@@ -449,9 +449,13 @@ return `
 	align-items: flex-start;
 	gap: 8px 3em;
 }
-.tCom014 .image-wrap{  flex: 0 1 auto; min-width: 200px  }
+.tCom014 .image-wrap{  flex: 0 1 auto; width: 160px; height: 160px;  }
 
-.tCom014 .upload-type2{ /* width: auto; height: auto; */ max-width: 160px;  }
+.tCom014 .upload-type2{ 
+	--hover-upload-btn-bg-color : hsl(0 0% 98%);
+	--hover-upload-btn-font-color : #111;
+	width: 100%;  height: 100%; 
+}
 .tCom014 .upload-type2 .upload-file-box .item{ background-color: transparent; }
 .tCom014 .upload-type2 .upload-file-box img{  
 	/* width: 160px; 

@@ -839,10 +839,10 @@
 .tCom014 .upload-type2{ width: auto; height: auto;  }
 .tCom014 .upload-type2 .upload-file-box .item{ background-color: transparent; }
 .tCom014 .upload-type2 .upload-file-box img{  
-	width: 160px; 
+	/* width: 160px; 
 	height: 160px; 
 	border-radius: 100em;
-	border : 1px solid var(--dark-200);
+	border : 1px solid var(--dark-200); */
 }
 .tCom014 .upload-type2 figcaption{ top: 0; right: 0; }
 .tCom014 .upload-type2 figcaption span{ display: none; }

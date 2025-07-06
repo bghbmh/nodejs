@@ -4,7 +4,6 @@ import { NO_ITEM_CONFIG } from './config.js';
 export async function CheckExistFile(requestUrl) { // f 대신 더 명확한 이름 사용
 //    const requestUrl = '/files/' + filePath;
     try {
-		//console.log('requestUrl 000- ', requestUrl)
         const response = await fetch(requestUrl, { method: 'GET' });
 
         if (!response.ok) {
@@ -12,7 +11,6 @@ export async function CheckExistFile(requestUrl) { // f 대신 더 명확한 이
             const errorBody = await response.text();
             throw new Error(`checkFile: HTTP 오류! Status: ${response.status}, StatusText: ${response.statusText}, Body: ${errorBody}`);
         }
-
 		
         return decodeURIComponent(response.url);
 
@@ -46,15 +44,15 @@ export async function getFileUrl(kind, files){ // kind : 이미지 iamge, 문서
 
 			// let requestUrl = `/files/${directoryName}/${subdir}/${filename}`;
 			let requestUrl = `/files${path}`;
-
 			if( kind === 'member') requestUrl = `/member${path}`;
 
 			const webUrl = await CheckExistFile(requestUrl);
+			// console.log('requestUrl 000- ', webUrl);
+
 			return { ...file, webUrl };
 		} catch (error) {
 			// 파일이 없을 경우 기본 이미지로 대체
-			console.log('file url 999 - ',kind,file.webUrl)
-
+			console.log('util-api : getFileUrl - 파일이 없을 경우 기본 이미지로 대체 - ',kind,file.webUrl)
 			return { ...file, alt : '이미지가 없습니다', webUrl: NO_ITEM_CONFIG[kind] };
 		}
 	});
@@ -92,10 +90,10 @@ export function CheckFilesInFolder(kind, files){
 }
 
 
-async function jsonDB(router) {
+export async function jsonDB(router) {
 
 	try {
-		const response = await fetch('/'+router, { method: 'GET' });
+		const response = await fetch(router, { method: 'GET' });
 
 		// 응답 상태 확인
 		if (!response.ok) { // HTTP 상태 코드가 200-299 범위가 아니면 오류

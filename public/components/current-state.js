@@ -198,6 +198,7 @@ class CurrentState extends HTMLElement {
 						if( STATE_STEP.length - 1 === idx && !isChecked ){ 
 							checked = true;
 							this.setAttribute('state', 'unknown');
+							this._state = 'unknown';
 						}
 
 						if( this._state === 'ongoing' && checked ){

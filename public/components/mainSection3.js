@@ -139,7 +139,7 @@ class MainSection3 extends HTMLElement {
 
 		function tempView(body,complete, ongoing){
 
-			console.log("mainsection33 tempView - ", complete )
+			console.log("mainsection33 tempView - ", complete, ongoing )
 
 			//
 			let article1 = DOM.CreateElement({'tag' : "complete-items", class:'colg-6 item'});
