@@ -118,7 +118,9 @@ class HeaderUserInfo extends HTMLElement {
 
 		switch(action){
 			case "modal":
-				const slot = DOM.CreateElement({ tag:'div', slot:'popover-content' });
+				console.log('clickElem - ',e.clientX, clonedNode);
+
+				const slot = DOM.CreateElement({ tag:'div',class:'popover-content', slot:'popover-content' });
 				
 				const a = DOM.CreateElement({ tag:'div', class:'popover-header', textContent:' 내 정보' });
 				const originalNode = this._body.querySelector('.user .info');
@@ -128,11 +130,10 @@ class HeaderUserInfo extends HTMLElement {
 				slot.appendChild(a);
 				slot.appendChild(clonedNode);
 
-				console.log('clickElem - ', clonedNode);
-				const popover = DOM.CreateElement({ tag:'pop-over', class:'popover popover-user-info' });
+				const popover = DOM.CreateElement({ tag:'pop-over', class:'popover popover-user-info', style:`left: ${e.clientX}px; top: ${e.clientY}px; transform: translate(20%, -32%);` });
 
 				popover.appendChild(slot);
-				document.body.appendChild(popover)
+				document.body.appendChild(popover);
 				popover.open();
 			break;
 			case "theme":

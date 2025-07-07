@@ -1484,14 +1484,42 @@ display: inline-block; min-width: 7em }
 
 
 
-.popover-user-info{ width: 100%; }
+.popover-user-info{ 
+	--ui-border-width :0;
+	--ui-popover-header-font-size: calc( 1em - 2px);
+	--ui-popover-header-color : #333;
+	--ui-popover-header-bg: transparent;
+	--ui-popover-box-shadow: 0 4px 2em hsl(0 0% 0% / .17);
+
+	--ui-popover-header-padding-y : 2em;
+	--ui-popover-header-padding-x : 2em;
+	width: 100%; 
+	position: absolute;
+	box-shadow: var(--ui-popover-box-shadow);
+}
+.popover-user-info .popover-content:before{
+	content: '';
+	position: absolute;
+	right: 99%;
+	clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+	display: block;
+	width: 1em;
+	height: 1.5em;
+	background-color: var(--ui-body-bg);
+	top: 2em;
+}
+
+
 .popover-user-info .info{
-padding: 1em
+padding: 3em var(--ui-popover-header-padding-x) var(--ui-popover-header-padding-y);
 }
 .popover-user-info:part(popover-content){
 	
-
 }
+
+.popover-user-info .popover-header{ display:  none; }
+
+
 .popover-user-info .option-wrap{ }
 .popover-user-info .option-wrap .option{ 
 
@@ -1533,7 +1561,7 @@ padding: 1em
 	background-color: var(--dark-200);
 	margin-top: calc( (.5em * 1.5) - 2px);
 }
-.popover-user-info  .btn-wrap{ }
+.popover-user-info  .btn-wrap{ display: none; }
 .popover-user-info .btn-wrap .btn{
 	font-size: 14px;
 	color: var(--dark-500);
