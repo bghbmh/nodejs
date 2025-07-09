@@ -17,6 +17,7 @@
 	--hover-upload-btn-font-color: #fff;
 
 	--upload-filebox-bg-color: hsl(0 0% 97%);
+	--upload-filebox-border-color: hsl(0 0% 97%);
 
 	--upload-btn-deleteone-bg-color : hsl(140, 7%, 95%);
 	--upload-btn-deleteone-hover-bg-color : hsl(140, 7%, 91%);
@@ -113,7 +114,7 @@
 	height: var(--ut-btn-min-height);
 	background-color: var(--upload-filebox-bg-color);
 	padding:1.5em 1em 1em;
-	border: 1px dashed #C6C6C6;
+	border: 1px dashed var(--upload-filebox-border-color , #C6C6C6);
 	border-radius: var(--upload-border-radius);
 	margin: 0;
 }
@@ -149,6 +150,7 @@
 }
 .upload-type1 .delete-all, .upload-type1 .file-count{
 	display: inline-flex;
+	align-items: center;
 	gap: 4px;
 	font-size: 13px;
 	padding: 2px 4px;
@@ -423,6 +425,7 @@
 	/* position: absolute; */
 	display: inline-flex;
 	gap: 4px;
+	align-items: center;
 	/* bottom: calc(100% + 4px); */
 	right: 6px;
 	padding: 2px 4px;

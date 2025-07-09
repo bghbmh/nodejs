@@ -6,7 +6,6 @@
         this.objectURLs = new Map();
 
 		this.deleteAllButton = null; // 전체삭제버튼
-		this.optionCTRL = null; // 전체삭제버튼 + 파일 개수 등 담는 상자
 
         console.log("files constructor");
         this.create(args);
@@ -20,7 +19,6 @@
             multiple: args.multiple !== undefined ? args.multiple : true, 
 			maxFiles : args.maxFiles ? args.maxFiles : 0,
             onPreviewMarkUp: args.onPreviewMarkUp ? args.onPreviewMarkUp : null,
-			onSetFiles : args.onSetFiles ? args.onSetFiles : null
         };
     }
 
@@ -31,31 +29,8 @@
         }
 
 		if( this.handler.multiple ) {
-			this.optionCTRL = this.CreateElement({ tag : "div", "class": "option-ctrl-wrap" });
-			this.handler.fileBox.parentNode.insertBefore(this.optionCTRL, this.handler.fileBox);
-
-			this.setCountFiles();
 			this.setDeleteAllFiles();
-		}
-
-		let localData// 불러올 파일이 있는 경우
-		if (typeof this.handler.onSetFiles === "function") {
-
-			localData = this.handler.onSetFiles(); 
-
-			if( localData.files.length > 0  ){
-				console.log("files multiple - ", this.handler.multiple);
-
-				localData.files.forEach( file => {
-					//console.log("create - ",file, localData.url )
-					this.makeFileSomeThing(file, this.localProcessFiles.bind(this) )
-				});
-			}
-
-			
-		
-			//this.setLocalFiles( localData, this.localProcessFiles.bind(this)  );
-			
+			this.setCountFiles();
 		}
 
         this.handler.loadBtn.addEventListener("click", e => {
@@ -126,6 +101,7 @@
 				현재 ${this.selectedFiles.length + files.length}개 선택됨.`);
         }
 
+
         for (let i = 0; i < files.length; i++) {
 
              if (this.handler.maxFiles > 0 && this.selectedFiles.length >= this.handler.maxFiles)  break;
@@ -137,39 +113,15 @@
             const objectURL = window.URL.createObjectURL(file);
             this.objectURLs.set(file, objectURL); 
 
-            this.handler.fileBox.appendChild( this.addFileUI(file, objectURL) );
 
-            if( this.handler.multiple ) this.checkSelectedFiles(); // 파일 개수 업데이트
-            if( this.handler.multiple ) this.checkDeleteAllButton(); // 전체삭제 버튼 상태 업데이트
-
-        }
-
-        //console.log('현재 선택 파일:', this.selectedFiles);
-
-    }
-
-	localProcessFiles(file, objectURL) {
-    	//console.log('localProcessFiles:', this, this.handler);
-
-		this.selectedFiles.push(file);
-		this.objectURLs.set(file, objectURL); 
-
-		this.handler.fileBox.appendChild( this.addFileUI(file, objectURL) );
-
-		if( this.handler.multiple ) this.checkSelectedFiles(); // 파일 개수 업데이트
-		if( this.handler.multiple ) this.checkDeleteAllButton(); // 전체삭제 버튼 상태 업데이트
-
-    }
-
-	addFileUI(file, objectURL) {
-
-		//this.objectURLs.set(file, objectURL); 
-
-		//console.log('addFileUI:', this, this.handler);
+			// let item = document.createElement("figure");
+            // item.setAttribute("class", "item");
+            // item.dataset.fileName = file.name;
 
 			let fileItemWrap = null;
+            // 미리보기 함수 실행
             if (typeof this.handler.onPreviewMarkUp === "function") {
-				fileItemWrap = this.handler.onPreviewMarkUp( file, objectURL );
+                fileItemWrap = this.handler.onPreviewMarkUp( file, objectURL);
             }
 			if( !fileItemWrap ){
 				const image = file.type.startsWith('image/');
@@ -193,8 +145,15 @@
             ctrl.appendChild(deleteButton);
 
             fileItemWrap.appendChild(ctrl); //삭제 버튼
-		
-		return fileItemWrap;
+            this.handler.fileBox.appendChild(fileItemWrap);
+
+            if( this.handler.multiple ) this.checkSelectedFiles(); // 파일 개수 업데이트
+            if( this.handler.multiple ) this.checkDeleteAllButton(); // 전체삭제 버튼 상태 업데이트
+
+        }
+
+        //console.log('현재 선택 파일:', this.selectedFiles);
+
     }
 
     // 현재 선택된 파일 확인
@@ -211,7 +170,7 @@
 			"textContent" : "전체삭제"
 		});
 		this.deleteAllButton.addEventListener("click", () =>  this.deleteAllFiles() );
-		this.optionCTRL.appendChild(this.deleteAllButton);
+		this.handler.loadBtn.parentNode.appendChild(this.deleteAllButton);
 	}
 
 	//한번에 삭제
@@ -242,13 +201,13 @@
 			"class": "file-count", 
 			innerHTML : this.handler.maxFiles > 0 ? tag1 : tag2
 		});
-		this.optionCTRL.appendChild(count);
+		this.handler.loadBtn.parentNode.appendChild(count);
 	}
 
 
 
 	checkSelectedFiles(){
-		const countElement = this.optionCTRL.querySelector(".guide-count");
+		const countElement = this.handler.loadBtn.parentNode.querySelector(".guide-count");
         if(countElement) {
             countElement.textContent = this.selectedFiles.length;
         }
@@ -279,8 +238,6 @@
 		// 해당 항목(item) 제거
 		if (itemToRemove && itemToRemove.parentNode === this.handler.fileBox) {
 			this.handler.fileBox.removeChild(itemToRemove);
-
-			//alert("항목제거" + this.handler.fileBox.classList)
 		} else {
 			console.warn("fileBox에 삭제하려는 파일이 없습니다.", itemToRemove);
 		}
@@ -327,41 +284,10 @@
 		// }, ALERT_DURATION);
 	}
 
-	static init(args){
-		return new UploadFiles(args);
-	}
-
-	// 로컬파일 연결
-	setLocalFiles( localData, cal){
-		localData.files.forEach( file => {
-			this.makeFileSomeThing(file, localData.url + file.name , cal)
-		});
-	}	
-	async makeFileSomeThing(fileInfo, cal ){
-
-		try{
-			const response = await fetch(fileInfo.webUrl );
-			if( !response.ok ){
-				console.error("파일 확인 필요 - ",fileInfo.webUrl, fileInfo.name, response.statusText );
-				return;
-			}
-
-			const blob = await response.blob();
-			const file = new File([blob], fileInfo.name, { type: fileInfo.type, } );
-			const objectURL = window.URL.createObjectURL(file);
-
-			//console.log("file----- ok - ",file, objectURL )
-
-			cal( file, objectURL);
-		} catch (error){
-			console.error("파일 확인 필요 - ",fileInfo.webUrl, fileInfo.name, error );
-		}	
-
-	}
-
 }
 
 window.bUploadFiles = window.bUploadFiles || {};
 window.bUploadFiles.init = function(args) {
     return new UploadFiles(args);
-}
+};
+
